@@ -1,0 +1,24 @@
+version: '2'
+services:
+  ssrf:
+    build: ./SSRF
+    ports:
+      - "80:80"
+    networks:
+      ssrf_net:
+        ipv4_address: 172.73.23.21
+  mysql:
+    build: ./MySQL
+    expose:
+      - "3306"
+    networks:
+      ssrf_net:
+        ipv4_address: 172.73.23.100
+        
+networks:
+  ssrf_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.73.23.0/24
